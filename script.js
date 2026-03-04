@@ -1,3 +1,17 @@
+// LOADER
+window.addEventListener("load", function(){
+document.getElementById("loader").style.display = "none";
+});
+
+// POPUP
+function openPopup(){
+document.getElementById("popup").style.display = "flex";
+}
+
+function closePopup(){
+document.getElementById("popup").style.display = "none";
+}
+
 function sendWhatsApp(){
 let name = document.getElementById("name").value;
 let order = document.getElementById("order").value;
