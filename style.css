@@ -1,85 +1,101 @@
-
 body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  background: #fff8f2;
-  text-align: center;
+margin: 0;
+font-family: 'Poppins', sans-serif;
+scroll-behavior: smooth;
+background: #fff8f0;
+text-align: center;
 }
 
-header {
-  background: #d62828;
-  color: white;
-  padding: 20px;
+.hero {
+background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+url("https://source.unsplash.com/1600x900/?restaurant");
+background-size: cover;
+color: white;
+padding: 100px 20px;
+animation: fadeIn 2s ease-in;
 }
 
-nav {
-  background: #f77f00;
-  padding: 10px;
+.hero h1 {
+font-size: 48px;
 }
 
-nav a {
-  color: white;
-  margin: 0 15px;
-  text-decoration: none;
-  font-weight: 500;
+.btn {
+display: inline-block;
+padding: 10px 20px;
+background: #ff4d00;
+color: white;
+text-decoration: none;
+border-radius: 5px;
+margin-top: 20px;
 }
 
-section {
-  padding: 40px 20px;
+.menu-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+gap: 20px;
+padding: 20px;
 }
 
-.menu-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-  gap: 20px;
+.card {
+background: white;
+border-radius: 15px;
+box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+overflow: hidden;
+transition: transform 0.3s;
 }
 
-.menu-item {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+.card:hover {
+transform: scale(1.05);
 }
 
-.gallery-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-  gap: 15px;
+.card img {
+width: 100%;
+height: 200px;
+object-fit: cover;
 }
 
-.gallery-container img {
-  width: 100%;
-  border-radius: 10px;
+.slider img {
+width: 100%;
+margin: 10px 0;
+border-radius: 10px;
 }
 
-form input {
-  padding: 10px;
-  margin: 10px;
-  width: 250px;
+.review-box {
+background: white;
+margin: 20px;
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.contact input {
+padding: 10px;
+margin: 10px;
+width: 250px;
 }
 
 button {
-  padding: 10px 20px;
-  background: #d62828;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+padding: 10px 20px;
+background: #ff4d00;
+color: white;
+border: none;
+border-radius: 5px;
+cursor: pointer;
 }
 
-button:hover {
-  background: #a4161a;
+.call-btn {
+position: fixed;
+bottom: 20px;
+right: 20px;
+background: #25d366;
+color: white;
+padding: 15px;
+border-radius: 50%;
+font-size: 24px;
+text-decoration: none;
 }
 
-.social a {
-  margin: 10px;
-  text-decoration: none;
-  color: #d62828;
-  font-weight: 600;
-}
-
-footer {
-  background: #222;
-  color: white;
-  padding: 15px;
+@keyframes fadeIn {
+from {opacity: 0;}
+to {opacity: 1;}
 }
