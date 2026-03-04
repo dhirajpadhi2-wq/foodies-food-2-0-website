@@ -136,3 +136,117 @@ font-size: 24px;
 text-decoration: none;
 box-shadow: 0 4px 15px rgba(212,175,55,0.6);
 }
+
+/* LUXURY LOADER */
+#loader {
+position: fixed;
+width: 100%;
+height: 100vh;
+background: #0F0F0F;
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 9999;
+}
+
+.gold-text {
+color: #D4AF37;
+font-size: 40px;
+animation: glow 1.5s infinite alternate;
+}
+
+/* GOLD GLOW */
+@keyframes glow {
+from { text-shadow: 0 0 10px #D4AF37; }
+to { text-shadow: 0 0 30px #F5D76E; }
+}
+
+/* TEXT REVEAL */
+.reveal {
+opacity: 0;
+transform: translateY(30px);
+animation: revealAnim 1.5s forwards;
+}
+
+@keyframes revealAnim {
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+/* GOLD ANIMATED BORDER */
+.card {
+border: 1px solid #D4AF37;
+position: relative;
+}
+
+.card::before {
+content: "";
+position: absolute;
+top: -2px;
+left: -2px;
+right: -2px;
+bottom: -2px;
+border-radius: 20px;
+border: 2px solid transparent;
+background: linear-gradient(45deg,#D4AF37,#F5D76E,#D4AF37);
+background-size: 300% 300%;
+animation: borderGlow 4s linear infinite;
+z-index: -1;
+}
+
+@keyframes borderGlow {
+0% {background-position: 0% 50%;}
+50% {background-position: 100% 50%;}
+100% {background-position: 0% 50%;}
+}
+
+/* GLOW HOVER */
+.card:hover {
+box-shadow: 0 0 25px #D4AF37;
+transform: scale(1.05);
+}
+
+/* DARK GLASS EFFECT */
+.review-box, .popup-content {
+background: rgba(255,255,255,0.05);
+backdrop-filter: blur(10px);
+border: 1px solid #D4AF37;
+}
+
+/* POPUP */
+.popup {
+display: none;
+position: fixed;
+width: 100%;
+height: 100%;
+background: rgba(0,0,0,0.8);
+top: 0;
+left: 0;
+justify-content: center;
+align-items: center;
+}
+
+.popup-content {
+padding: 30px;
+border-radius: 15px;
+text-align: center;
+}
+
+.popup input {
+display: block;
+margin: 10px auto;
+padding: 10px;
+background: #1C1C1C;
+border: 1px solid #D4AF37;
+color: white;
+}
+
+.close {
+position: absolute;
+right: 20px;
+cursor: pointer;
+color: #D4AF37;
+font-size: 22px;
+}
