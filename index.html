@@ -3,92 +3,98 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Foodies Food 2.0 | Jajpur</title>
+<title>Foodies Food 2.0 | Premium</title>
 <link rel="stylesheet" href="style.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-<script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
 
-<header>
+<!-- HERO SECTION -->
+<section class="hero">
   <h1>Foodies Food 2.0</h1>
-  <p>Kusuma Rd, Kalyanpur, Jajpur, Odisha</p>
-</header>
+  <p>Delicious Food | Fast Service | Best Taste in Jajpur</p>
+  <a href="#menu" class="btn">View Menu</a>
+</section>
 
-<nav>
-  <a href="#menu">Menu</a>
-  <a href="#gallery">Gallery</a>
-  <a href="#location">Location</a>
-  <a href="#contact">Contact</a>
-</nav>
-
-<!-- MENU SECTION -->
+<!-- MENU -->
 <section id="menu">
-<h2>🍽 Our Menu</h2>
-<div class="menu-container">
-  <div class="menu-item">
-    <h3>Chicken Biryani</h3>
-    <p>₹180</p>
-  </div>
-  <div class="menu-item">
-    <h3>Veg Fried Rice</h3>
-    <p>₹120</p>
-  </div>
-  <div class="menu-item">
-    <h3>Chicken Roll</h3>
-    <p>₹90</p>
-  </div>
-  <div class="menu-item">
-    <h3>Burger Combo</h3>
-    <p>₹150</p>
-  </div>
+<h2>🍽 Our Special Menu</h2>
+<div class="menu-grid">
+
+<div class="card">
+<img src="https://source.unsplash.com/400x300/?biryani">
+<h3>Chicken Biryani</h3>
+<p>₹180</p>
+</div>
+
+<div class="card">
+<img src="https://source.unsplash.com/400x300/?burger">
+<h3>Burger Combo</h3>
+<p>₹150</p>
+</div>
+
+<div class="card">
+<img src="https://source.unsplash.com/400x300/?fried-rice">
+<h3>Veg Fried Rice</h3>
+<p>₹120</p>
+</div>
+
 </div>
 </section>
 
-<!-- GALLERY -->
-<section id="gallery">
-<h2>📸 Photo Gallery</h2>
-<div class="gallery-container">
-  <img src="https://source.unsplash.com/400x300/?biryani">
-  <img src="https://source.unsplash.com/400x300/?restaurant-food">
-  <img src="https://source.unsplash.com/400x300/?fast-food">
-  <img src="https://source.unsplash.com/400x300/?indian-food">
+<!-- SLIDER -->
+<section class="slider">
+<h2>🔥 Popular Dishes</h2>
+<div class="slides">
+<img src="https://source.unsplash.com/800x400/?indian-food">
+<img src="https://source.unsplash.com/800x400/?restaurant">
+<img src="https://source.unsplash.com/800x400/?fast-food">
+</div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews">
+<h2>⭐ Customer Reviews</h2>
+<div class="review-box">
+<p>"Best food in Jajpur! Must try Biryani!"</p>
+<h4>- Happy Customer</h4>
+</div>
+<div class="review-box">
+<p>"Fast delivery and amazing taste."</p>
+<h4>- Regular Visitor</h4>
 </div>
 </section>
 
 <!-- LOCATION -->
-<section id="location">
-<h2>📍 Find Us</h2>
-<iframe 
-src="https://www.google.com/maps?q=Kusuma+Rd,+Kalyanpur,+Jajpur,+Odisha&output=embed"
-width="100%" height="300" style="border:0;" allowfullscreen="">
-</iframe>
+<section class="location">
+<h2>📍 Visit Us</h2>
+<iframe src="https://www.google.com/maps?q=Kusuma+Rd,+Kalyanpur,+Jajpur,+Odisha&output=embed"
+width="100%" height="300" style="border:0;"></iframe>
 </section>
 
 <!-- CONTACT -->
-<section id="contact">
-<h2>📞 Contact Us</h2>
+<section class="contact">
+<h2>📞 Order Now</h2>
 
 <form onsubmit="sendWhatsApp(); return false;">
 <input type="text" id="name" placeholder="Your Name" required>
-<input type="text" id="message" placeholder="Your Message / Order" required>
-<button type="submit">Send via WhatsApp</button>
+<input type="text" id="order" placeholder="Your Order" required>
+<button type="submit">Order via WhatsApp</button>
 </form>
 
-<p>📱 Call: <a href="tel:+919938467223">+91 99384 67223</a></p>
+<p>📱 Call Now: <a href="tel:+919938467223">+91 99384 67223</a></p>
 
 <div class="social">
-  <a href="#">Facebook</a>
-  <a href="#">Instagram</a>
-  <a href="#">YouTube</a>
+<a href="#">Facebook</a>
+<a href="#">Instagram</a>
+<a href="#">YouTube</a>
 </div>
 
 </section>
 
-<footer>
-  <p>© 2026 Foodies Food 2.0 | All Rights Reserved</p>
-</footer>
+<!-- FLOATING CALL BUTTON -->
+<a href="tel:+919938467223" class="call-btn">📞</a>
 
 <script src="script.js"></script>
 
