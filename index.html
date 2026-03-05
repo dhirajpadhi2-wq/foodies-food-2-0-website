@@ -21,7 +21,7 @@ padding:15px;
 text-align:center;
 border-bottom:2px solid gold;
 }
-
+  
 header h1{
 color:gold;
 letter-spacing:2px;
@@ -82,7 +82,7 @@ padding:10px;
 .menu-item:hover{
 background:#111;
 }
-
+  
 .gallery{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
@@ -148,9 +148,65 @@ color:gold;
 font-size:25px;
 }
 
+  .menu-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+}
+
+.food-card{
+background:#111;
+padding:15px;
+border-radius:15px;
+text-align:center;
+transition:.4s;
+border:1px solid #222;
+}
+
+.food-card:hover{
+transform:rotateY(10deg) scale(1.05);
+box-shadow:0 0 20px gold;
+}
+
+.food-card img{
+width:100%;
+border-radius:10px;
+}
+
+.price{
+color:gold;
+font-weight:bold;
+}
+
+.add-btn{
+background:gold;
+border:none;
+padding:8px 15px;
+cursor:pointer;
+margin-top:10px;
+}
+
+.cart{
+position:fixed;
+right:10px;
+bottom:10px;
+background:#111;
+padding:20px;
+border-radius:10px;
+border:1px solid gold;
+width:200px;
+}
+
+.slider img{
+width:100%;
+height:300px;
+object-fit:cover;
+border-bottom:2px solid gold;
+}
+  
 </style>
 </head>
-
+  
 <body>
 
 <div class="loader" id="loader">
@@ -168,7 +224,19 @@ Loading Foodies Food 2.0...
 </nav>
 
 </header>
+  
+<div class="slider">
+<img id="slide" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38">
+</div>
 
+  <section id="menu">
+
+<h2>Our Special Menu</h2>
+
+<div class="menu-grid" id="menu-container"></div>
+
+  </section>
+  
 <div class="hero">
 <h2>Delicious Food • Luxury Taste</h2>
 </div>
@@ -225,6 +293,18 @@ width="100%" height="250"></iframe>
 
 </section>
 
+  <div class="cart">
+
+<h3>🛒 Cart</h3>
+
+<ul id="cart-items"></ul>
+
+<p>Total: ₹<span id="total">0</span></p>
+
+<button onclick="orderWhatsApp()">Order via WhatsApp</button>
+
+  </div>
+  
 <footer>
 
 <p>© 2026 Foodies Food 2.0</p>
@@ -266,6 +346,91 @@ container.appendChild(div);
 
 });
 
+  let cart=[];
+let total=0;
+
+function addToCart(name,price){
+
+cart.push(name);
+
+total+=parseInt(price);
+
+document.getElementById("total").innerText=total;
+
+let li=document.createElement("li");
+
+li.innerText=name;
+
+document.getElementById("cart-items").appendChild(li);
+
+}
+
+function orderWhatsApp(){
+
+let message="Hello, I want to order:%0A";
+
+cart.forEach(item=>{
+message+=item+"%0A";
+});
+
+message+="Total: ₹"+total;
+
+let phone="919090820969";
+
+window.open(`https://wa.me/${phone}?text=${message}`);
+
+}
+
+fetch("menu.json")
+.then(res=>res.json())
+.then(data=>{
+
+let container=document.getElementById("menu-container");
+
+data.menu.forEach(category=>{
+
+category.items.forEach(item=>{
+
+let card=document.createElement("div");
+
+card.className="food-card";
+
+card.innerHTML=`
+
+<img src="https://source.unsplash.com/300x200/?food">
+
+<h3>${item.name}</h3>
+
+<p class="price">₹${item.price}</p>
+
+<button class="add-btn" onclick="addToCart('${item.name}','${item.price}')">Add to Cart</button>
+
+`;
+
+container.appendChild(card);
+
+});
+
+});
+
+});
+
+let images=[
+"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38",
+"https://images.unsplash.com/photo-1550547660-d9450f859349",
+"https://images.unsplash.com/photo-1600891964599-f61ba0e24092"
+];
+
+let i=0;
+
+setInterval(()=>{
+
+i=(i+1)%images.length;
+
+document.getElementById("slide").src=images[i];
+
+},3000);
+  
 </script>
 
 </body>
