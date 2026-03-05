@@ -3,115 +3,270 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Foodies Food 2.0 | Premium</title>
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<title>Foodies Food 2.0</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Poppins;
+background:#0a0a0a;
+color:white;
+}
+
+header{
+background:#000;
+padding:15px;
+text-align:center;
+border-bottom:2px solid gold;
+}
+
+header h1{
+color:gold;
+letter-spacing:2px;
+}
+
+nav{
+display:flex;
+justify-content:center;
+gap:20px;
+padding:10px;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+font-weight:bold;
+transition:.3s;
+}
+
+nav a:hover{
+color:gold;
+}
+
+.hero{
+height:60vh;
+background:url("https://images.unsplash.com/photo-1600891964599-f61ba0e24092");
+background-size:cover;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+}
+
+.hero h2{
+font-size:40px;
+background:rgba(0,0,0,0.6);
+padding:20px;
+border:2px solid gold;
+}
+
+section{
+padding:40px;
+}
+
+h2{
+color:gold;
+text-align:center;
+margin-bottom:20px;
+}
+
+.menu-item{
+display:flex;
+justify-content:space-between;
+border-bottom:1px solid #333;
+padding:10px;
+}
+
+.menu-item:hover{
+background:#111;
+}
+
+.gallery{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
+}
+
+.gallery img{
+width:100%;
+border-radius:10px;
+transition:.3s;
+}
+
+.gallery img:hover{
+transform:scale(1.05);
+box-shadow:0 0 15px gold;
+}
+
+.contact{
+max-width:500px;
+margin:auto;
+}
+
+input,textarea{
+width:100%;
+padding:10px;
+margin:10px 0;
+border:none;
+border-radius:5px;
+}
+
+button{
+background:gold;
+border:none;
+padding:10px 20px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.map{
+margin-top:30px;
+}
+
+footer{
+background:black;
+text-align:center;
+padding:20px;
+margin-top:40px;
+border-top:2px solid gold;
+}
+
+.loader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+color:gold;
+font-size:25px;
+}
+
+</style>
 </head>
 
 <body>
 
-  <div id="loader">
-  <h1 class="gold-text">Foodies Food 2.0</h1>
-  </div>
-  
-<!-- HERO SECTION -->
-<section class="hero">
-  <h1 class="reveal">Foodies Food 2.0</h1>
-  <p class="reveal">Luxury Dining Experience in Jajpur</p>
-  <button class="btn" onclick="openPopup()">Book a Table</button>
-</section>
+<div class="loader" id="loader">
+Loading Foodies Food 2.0...
+</div>
 
-<!-- MENU -->
+<header>
+
+<h1>Foodies Food 2.0</h1>
+
+<nav>
+<a href="#menu">Menu</a>
+<a href="#gallery">Gallery</a>
+<a href="#contact">Contact</a>
+</nav>
+
+</header>
+
+<div class="hero">
+<h2>Delicious Food • Luxury Taste</h2>
+</div>
+
 <section id="menu">
-<h2>🍽 Our Special Menu</h2>
-<div class="menu-grid">
 
-<div class="card">
-<img src="https://source.unsplash.com/400x300/?biryani">
-<h3>Chicken Biryani</h3>
-<p>₹180</p>
-</div>
+<h2>Our Menu</h2>
 
-<div class="card">
-<img src="https://source.unsplash.com/400x300/?burger">
-<h3>Burger Combo</h3>
-<p>₹150</p>
-</div>
+<div id="menu-container"></div>
 
-<div class="card">
-<img src="https://source.unsplash.com/400x300/?fried-rice">
-<h3>Veg Fried Rice</h3>
-<p>₹120</p>
-</div>
-
-</div>
 </section>
 
-<!-- SLIDER -->
-<section class="slider">
-<h2>🔥 Popular Dishes</h2>
-<div class="slides">
-<img src="https://source.unsplash.com/800x400/?indian-food">
-<img src="https://source.unsplash.com/800x400/?restaurant">
-<img src="https://source.unsplash.com/800x400/?fast-food">
+<section id="gallery">
+
+<h2>Food Gallery</h2>
+
+<div class="gallery">
+
+<img src="https://images.unsplash.com/photo-1604908176997-43154a4d02e0">
+<img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38">
+<img src="https://images.unsplash.com/photo-1550547660-d9450f859349">
+<img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092">
+
 </div>
+
 </section>
 
-<!-- REVIEWS -->
-<section class="reviews">
-<h2>⭐ Customer Reviews</h2>
-<div class="review-box">
-<p>"Best food in Jajpur! Must try Biryani!"</p>
-<h4>- Happy Customer</h4>
-</div>
-<div class="review-box">
-<p>"Fast delivery and amazing taste."</p>
-<h4>- Regular Visitor</h4>
-</div>
-</section>
+<section id="contact">
 
-<!-- LOCATION -->
-<section class="location">
-<h2>📍 Visit Us</h2>
-<iframe src="https://www.google.com/maps?q=Kusuma+Rd,+Kalyanpur,+Jajpur,+Odisha&output=embed"
-width="100%" height="300" style="border:0;"></iframe>
-</section>
+<h2>Contact Us</h2>
 
-<!-- CONTACT -->
-<section class="contact">
-<h2>📞 Order Now</h2>
-  
-  <div id="popup" class="popup">
-  <div class="popup-content">
-    <span class="close" onclick="closePopup()">&times;</span>
-    <h2>Book Your Table</h2>
-    <input type="text" placeholder="Your Name">
-    <input type="date">
-    <input type="time">
-    <button>Confirm Booking</button>
-  </div>
-  </div>
+<div class="contact">
 
-<form onsubmit="sendWhatsApp(); return false;">
-<input type="text" id="name" placeholder="Your Name" required>
-<input type="text" id="order" placeholder="Your Order" required>
-<button type="submit">Order via WhatsApp</button>
+<form>
+
+<input type="text" placeholder="Your Name">
+
+<input type="email" placeholder="Your Email">
+
+<textarea placeholder="Message"></textarea>
+
+<button type="submit">Send Message</button>
+
 </form>
 
-<p>📱 Call Now: <a href="tel:+919938467223">+91 99384 67223</a></p>
+<div class="map">
 
-<div class="social">
-<a href="#">Facebook</a>
-<a href="#">Instagram</a>
-<a href="#">YouTube</a>
+<iframe src="https://maps.google.com/maps?q=foodies%20food%202.0&t=&z=13&ie=UTF8&iwloc=&output=embed"
+width="100%" height="250"></iframe>
+
+</div>
+
 </div>
 
 </section>
 
-<!-- FLOATING CALL BUTTON -->
-<a href="tel:+919938467223" class="call-btn">📞</a>
+<footer>
 
-<script src="script.js"></script>
+<p>© 2026 Foodies Food 2.0</p>
+
+</footer>
+
+<script>
+
+window.onload=function(){
+document.getElementById("loader").style.display="none";
+}
+
+fetch("menu.json")
+.then(res=>res.json())
+.then(data=>{
+
+let container=document.getElementById("menu-container");
+
+data.menu.forEach(category=>{
+
+let title=document.createElement("h3");
+title.innerText=category.category;
+title.style.color="gold";
+
+container.appendChild(title);
+
+category.items.forEach(item=>{
+
+let div=document.createElement("div");
+div.className="menu-item";
+
+div.innerHTML=`<span>${item.name}</span><span>${item.price}</span>`;
+
+container.appendChild(div);
+
+});
+
+});
+
+});
+
+</script>
 
 </body>
 </html>
