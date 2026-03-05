@@ -233,7 +233,37 @@ Loading Foodies Food 2.0...
 
 <h2>Our Special Menu</h2>
 
-<div class="menu-grid" id="menu-container"></div>
+<div class="menu-grid">
+
+<div class="food-card">
+<img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38">
+<h3>Pizza</h3>
+<p class="price">₹199</p>
+<button class="add-btn" onclick="addToCart('Pizza',199)">Add to Cart</button>
+</div>
+
+<div class="food-card">
+<img src="https://images.unsplash.com/photo-1550547660-d9450f859349">
+<h3>Burger</h3>
+<p class="price">₹120</p>
+<button class="add-btn" onclick="addToCart('Burger',120)">Add to Cart</button>
+</div>
+
+<div class="food-card">
+<img src="https://images.unsplash.com/photo-1604908176997-43154a4d02e0">
+<h3>Biryani</h3>
+<p class="price">₹180</p>
+<button class="add-btn" onclick="addToCart('Biryani',180)">Add to Cart</button>
+</div>
+
+<div class="food-card">
+<img src="https://images.unsplash.com/photo-1585032226651-759b368d7246">
+<h3>Noodles</h3>
+<p class="price">₹140</p>
+<button class="add-btn" onclick="addToCart('Noodles',140)">Add to Cart</button>
+</div>
+
+</div>
 
   </section>
   
@@ -241,13 +271,6 @@ Loading Foodies Food 2.0...
 <h2>Delicious Food • Luxury Taste</h2>
 </div>
 
-<section id="menu">
-
-<h2>Our Menu</h2>
-
-<div id="menu-container"></div>
-
-</section>
 
 <section id="gallery">
 
@@ -317,6 +340,38 @@ window.onload=function(){
 document.getElementById("loader").style.display="none";
 }
 
+  let total=0;
+
+function addToCart(name,price){
+
+total+=price;
+
+document.getElementById("total").innerText=total;
+
+let li=document.createElement("li");
+
+li.innerText=name+" - ₹"+price;
+
+document.getElementById("cart-items").appendChild(li);
+
+}
+
+function orderWhatsApp(){
+
+let items=document.querySelectorAll("#cart-items li");
+
+let message="Hello I want to order:%0A";
+
+items.forEach(item=>{
+message+=item.innerText+"%0A";
+});
+
+message+="Total ₹"+total;
+
+window.open("https://wa.me/919938467223?text="+message);
+
+}
+  
 fetch("menu.json")
 .then(res=>res.json())
 .then(data=>{
