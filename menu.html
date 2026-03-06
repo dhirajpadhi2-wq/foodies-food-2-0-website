@@ -4,6 +4,8 @@
 
 <title>Foodies Food Menu</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
 
 body{
@@ -24,9 +26,43 @@ h1{
 color:gold;
 }
 
+/* CATEGORY SLIDER */
+
+.categories{
+display:flex;
+overflow-x:auto;
+gap:10px;
+padding:10px;
+background:#111;
+position:sticky;
+top:0;
+}
+
+.categories button{
+background:#222;
+color:white;
+border:1px solid gold;
+padding:8px 15px;
+cursor:pointer;
+white-space:nowrap;
+}
+
+.categories button:hover{
+background:gold;
+color:black;
+}
+
+/* MENU */
+
+.category-title{
+color:gold;
+margin-top:30px;
+}
+
 .menu-item{
 display:flex;
 justify-content:space-between;
+align-items:center;
 border-bottom:1px solid #333;
 padding:10px;
 }
@@ -45,32 +81,58 @@ padding:5px 10px;
 cursor:pointer;
 }
 
-.cart{
+/* CART POPUP */
+
+.cart-btn{
 position:fixed;
-right:10px;
-bottom:80px;
+bottom:20px;
+right:20px;
+background:gold;
+padding:15px;
+border-radius:50%;
+cursor:pointer;
+font-weight:bold;
+}
+
+.cart-popup{
+position:fixed;
+bottom:-500px;
+left:0;
+width:100%;
 background:#111;
+border-top:3px solid gold;
 padding:20px;
-border-radius:10px;
-width:250px;
-border:1px solid gold;
-max-height:350px;
+transition:0.4s;
+max-height:80vh;
 overflow:auto;
 }
 
-.whatsapp{
-position:fixed;
-bottom:10px;
-right:10px;
-background:#25D366;
-padding:15px;
-border-radius:50px;
-cursor:pointer;
+.cart-popup.active{
+bottom:0;
 }
 
 input,select{
 width:100%;
+padding:8px;
 margin-top:5px;
+}
+
+.order-btn{
+background:#25D366;
+border:none;
+padding:10px;
+margin-top:10px;
+cursor:pointer;
+width:100%;
+}
+
+.clear-btn{
+background:red;
+border:none;
+padding:8px;
+margin-top:5px;
+cursor:pointer;
+width:100%;
 }
 
 </style>
@@ -85,33 +147,40 @@ margin-top:5px;
 
 </header>
 
+<div class="categories" id="categorySlider"></div>
+
 <div id="menuContainer"></div>
 
-<div class="cart">
+<div class="cart-btn" onclick="toggleCart()">
+🛒
+</div>
 
-<h3>🛒 Cart</h3>
+<div class="cart-popup" id="cartPopup">
+
+<h3>🛒 Your Cart</h3>
 
 <ul id="cartItems"></ul>
 
-<p>Total ₹ <span id="total">0</span></p>
+<h3>Total ₹ <span id="total">0</span></h3>
+
+<h4>Customer Details</h4>
+
+<input id="custName" placeholder="Your Name">
+
+<input id="custPhone" placeholder="Phone Number">
 
 <select id="orderType">
-
 <option>Home Delivery</option>
 <option>Dine In</option>
 <option>Take Away</option>
-
 </select>
 
 <input id="landmark" placeholder="Enter Landmark">
 
-<button onclick="clearCart()">Clear Cart</button>
-<button onclick="orderWhatsApp()">Order</button>
+<button class="order-btn" onclick="orderWhatsApp()">Order on WhatsApp</button>
 
-</div>
+<button class="clear-btn" onclick="clearCart()">Clear Cart</button>
 
-<div class="whatsapp" onclick="orderWhatsApp()">
-Order
 </div>
 
 <script>
@@ -119,20 +188,38 @@ Order
 let cart=[];
 let total=0;
 
+function toggleCart(){
+
+document.getElementById("cartPopup").classList.toggle("active");
+
+}
+
 fetch("menu.json")
 
 .then(res=>res.json())
 
 .then(data=>{
 
-let container=document.getElementById("menuContainer");
+let menuContainer=document.getElementById("menuContainer");
+let categorySlider=document.getElementById("categorySlider");
 
-data.menu.forEach(category=>{
+data.menu.forEach((category,index)=>{
+
+let btn=document.createElement("button");
+btn.innerText=category.category;
+
+btn.onclick=()=>{
+document.getElementById("cat"+index).scrollIntoView({behavior:"smooth"});
+}
+
+categorySlider.appendChild(btn);
 
 let title=document.createElement("h2");
+title.className="category-title";
+title.id="cat"+index;
 title.innerText=category.category;
 
-container.appendChild(title);
+menuContainer.appendChild(title);
 
 category.items.forEach(item=>{
 
@@ -142,6 +229,7 @@ let div=document.createElement("div");
 div.className="menu-item";
 
 div.innerHTML=`
+
 <span>${item.name} - ₹${item.price}</span>
 
 <div>
@@ -152,6 +240,7 @@ div.innerHTML=`
 <button class="add-btn">Add</button>
 
 </div>
+
 `;
 
 let qtySpan=div.querySelector(".qty");
@@ -187,7 +276,7 @@ document.getElementById("cartItems").appendChild(li);
 
 }
 
-container.appendChild(div);
+menuContainer.appendChild(div);
 
 });
 
@@ -207,18 +296,25 @@ document.getElementById("total").innerText=0;
 
 function orderWhatsApp(){
 
+let name=document.getElementById("custName").value;
+let phone=document.getElementById("custPhone").value;
 let type=document.getElementById("orderType").value;
 let landmark=document.getElementById("landmark").value;
 
-let message="Hello I want to order:%0A";
+let message="Hello Foodies Food%0A";
+
+message+="Name: "+name+"%0A";
+message+="Phone: "+phone+"%0A%0A";
+
+message+="Order:%0A";
 
 cart.forEach(i=>{
 message+=i+"%0A";
 });
 
-message+="Order Type:"+type+"%0A";
-message+="Landmark:"+landmark+"%0A";
-message+="Total ₹"+total;
+message+="%0AOrder Type:"+type;
+message+="%0ALandmark:"+landmark;
+message+="%0ATotal ₹"+total;
 
 window.open("https://wa.me/919938467223?text="+message);
 
