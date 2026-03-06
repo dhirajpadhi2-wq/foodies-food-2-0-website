@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Foodies Food 2.0</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-  
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
 <style>
 
 body{
@@ -21,11 +22,15 @@ header{
 background:black;
 padding:15px;
 border-bottom:2px solid gold;
+position:sticky;
+top:0;
+z-index:1000;
 }
 
 header h1{
 color:gold;
 text-align:center;
+margin:0;
 }
 
 nav{
@@ -38,10 +43,25 @@ margin-top:10px;
 nav a{
 color:white;
 text-decoration:none;
+font-weight:bold;
 }
 
 nav a:hover{
 color:gold;
+}
+
+.hero{
+text-align:center;
+padding:40px 20px;
+}
+
+.hero h2{
+color:gold;
+font-size:32px;
+}
+
+.hero p{
+color:#ccc;
 }
 
 .cart-count{
@@ -147,6 +167,15 @@ border:2px solid gold;
 padding:30px;
 display:none;
 text-align:center;
+border-radius:10px;
+}
+
+footer{
+text-align:center;
+padding:20px;
+border-top:1px solid #333;
+margin-top:40px;
+color:#aaa;
 }
 
 </style>
@@ -161,17 +190,27 @@ text-align:center;
 
 <nav>
 
-  <a href="index.html">Home</a>
-  
-<a href="#">Menu</a>
+<a href="index.html">Home</a>
 
-  <a href="catering.html">Catering</a>
-  
+<a href="#menuContainer">Menu</a>
+
+<a href="catering.html">Catering</a>
+
 <a href="#">Cart <span class="cart-count" id="cartCount">0</span></a>
 
 </nav>
 
 </header>
+
+
+<section class="hero">
+
+<h2>Delicious Food Delivered Fast</h2>
+
+<p>Order your favorite meals in minutes</p>
+
+</section>
+
 
 <div class="search-box">
 
@@ -179,9 +218,12 @@ text-align:center;
 
 </div>
 
+
 <div class="category-slider" id="categorySlider"></div>
 
+
 <section id="menuContainer"></section>
+
 
 <div class="cart">
 
@@ -213,7 +255,9 @@ text-align:center;
 
 </div>
 
+
 <div class="whatsapp" onclick="order()">📲</div>
+
 
 <div class="thankyou" id="thanks">
 
@@ -227,11 +271,20 @@ text-align:center;
 
 </div>
 
+
+<footer>
+
+<p>© 2026 Foodies Food 2.0</p>
+
+</footer>
+
+
 <script>
 
 let cart=[]
 let total=0
 let cartCount=0
+
 
 fetch("menu.json")
 
@@ -244,6 +297,13 @@ createCategories(data.menu)
 showMenu(data.menu)
 
 })
+
+.catch(()=>{
+
+document.getElementById("menuContainer").innerHTML="<p style='text-align:center'>Menu loading error</p>"
+
+})
+
 
 function createCategories(menu){
 
@@ -265,11 +325,13 @@ slider.appendChild(btn)
 
 }
 
+
 function scrollToCategory(name){
 
 document.getElementById(name).scrollIntoView({behavior:"smooth"})
 
 }
+
 
 function showMenu(menu){
 
@@ -284,6 +346,7 @@ title.id=cat.category
 title.innerText=cat.category
 
 container.appendChild(title)
+
 
 cat.items.forEach(item=>{
 
@@ -315,11 +378,13 @@ let qtySpan=div.querySelector(".qty")
 
 let btns=div.querySelectorAll(".qty-btn")
 
+
 btns[0].onclick=()=>{
 
 if(qty>1){qty--;qtySpan.innerText=qty}
 
 }
+
 
 btns[1].onclick=()=>{
 
@@ -327,9 +392,10 @@ qty++;qtySpan.innerText=qty
 
 }
 
+
 div.querySelector(".add-btn").onclick=()=>{
 
-let price=parseInt(item.price)*qty
+let price=item.price*qty
 
 total+=price
 
@@ -341,6 +407,7 @@ document.getElementById("cartCount").innerText=cartCount
 
 document.getElementById("total").innerText=total
 
+
 let li=document.createElement("li")
 
 li.innerText=item.name+" x"+qty
@@ -349,6 +416,7 @@ document.getElementById("cartItems").appendChild(li)
 
 }
 
+
 container.appendChild(div)
 
 })
@@ -356,6 +424,7 @@ container.appendChild(div)
 })
 
 }
+
 
 document.getElementById("search").addEventListener("keyup",function(){
 
@@ -370,6 +439,7 @@ i.style.display=i.innerText.toLowerCase().includes(value)?"flex":"none"
 })
 
 })
+
 
 function clearCart(){
 
@@ -387,6 +457,7 @@ document.getElementById("cartCount").innerText=0
 
 }
 
+
 function order(){
 
 let name=document.getElementById("name").value
@@ -396,6 +467,14 @@ let phone=document.getElementById("phone").value
 let type=document.getElementById("type").value
 
 let landmark=document.getElementById("landmark").value
+
+if(cart.length==0){
+
+alert("Cart is empty")
+
+return
+
+}
 
 let id="ORD"+Math.floor(Math.random()*100000)
 
@@ -422,6 +501,7 @@ document.getElementById("orderID").innerText="Order ID: "+id
 document.getElementById("thanks").style.display="block"
 
 }
+
 
 function closeThanks(){
 
