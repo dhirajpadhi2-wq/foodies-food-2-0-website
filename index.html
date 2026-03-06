@@ -2,6 +2,8 @@
 <html>
 <head>
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>Foodies Food 2.0</title>
 
 <style>
@@ -16,66 +18,133 @@ color:white;
 header{
 background:black;
 padding:15px;
-text-align:center;
 border-bottom:2px solid gold;
 }
 
 header h1{
 color:gold;
+text-align:center;
 }
 
 nav{
 display:flex;
 justify-content:center;
-gap:20px;
+gap:25px;
 margin-top:10px;
 }
 
 nav a{
 color:white;
 text-decoration:none;
-font-weight:bold;
 }
 
 nav a:hover{
 color:gold;
 }
 
-.slider img{
-width:100%;
-height:350px;
-object-fit:cover;
-}
-
-section{
-padding:40px;
-}
-
-.gallery{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:15px;
-}
-
-.gallery img{
-width:100%;
+.cart-count{
+background:gold;
+color:black;
+padding:2px 8px;
 border-radius:10px;
+margin-left:5px;
 }
 
-.map iframe{
-width:100%;
-height:300px;
-border:0;
+.search-box{
+text-align:center;
+margin:20px;
 }
 
-.menu-btn{
-display:block;
-margin:auto;
+.search-box input{
+padding:10px;
+width:80%;
+max-width:400px;
+border:none;
+border-radius:5px;
+}
+
+.category-slider{
+display:flex;
+overflow-x:auto;
+gap:10px;
+padding:10px;
+}
+
+.category-btn{
+background:#111;
+border:1px solid gold;
+color:gold;
+padding:8px 15px;
+border-radius:20px;
+cursor:pointer;
+white-space:nowrap;
+}
+
+.menu-item{
+display:flex;
+justify-content:space-between;
+border-bottom:1px solid #333;
+padding:10px;
+}
+
+.qty-box{
+display:flex;
+gap:5px;
+}
+
+.qty-btn{
 background:gold;
 border:none;
-padding:15px 30px;
-font-size:18px;
+padding:5px 10px;
 cursor:pointer;
+}
+
+.add-btn{
+background:gold;
+border:none;
+padding:5px 10px;
+cursor:pointer;
+}
+
+.cart{
+position:fixed;
+right:10px;
+bottom:70px;
+background:#111;
+padding:20px;
+border-radius:10px;
+width:250px;
+border:1px solid gold;
+max-height:350px;
+overflow:auto;
+}
+
+.whatsapp{
+position:fixed;
+bottom:10px;
+right:10px;
+background:#25D366;
+padding:15px;
+border-radius:50px;
+cursor:pointer;
+}
+
+input,select{
+width:100%;
+padding:6px;
+margin-top:5px;
+}
+
+.thankyou{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:#111;
+border:2px solid gold;
+padding:30px;
+display:none;
+text-align:center;
 }
 
 </style>
@@ -90,70 +159,269 @@ cursor:pointer;
 
 <nav>
 
-<a href="index.html">Home</a>
-<a href="menu.html">Menu</a>
+<a href="#">Menu</a>
+
+<a href="#">Cart <span class="cart-count" id="cartCount">0</span></a>
 
 </nav>
 
 </header>
 
-<div class="slider">
+<div class="search-box">
 
-<img id="slide" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38">
-
-</div>
-
-<section>
-
-<h2 style="text-align:center;color:gold;">Explore Our Menu</h2>
-
-<a href="menu.html">
-<button class="menu-btn">View Full Menu</button>
-</a>
-
-</section>
-
-<section>
-
-<h2 style="text-align:center;color:gold;">Restaurant Gallery</h2>
-
-<div class="gallery">
-
-<img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5">
-<img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092">
-<img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38">
-<img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836">
+<input type="text" id="search" placeholder="Search food...">
 
 </div>
 
-</section>
+<div class="category-slider" id="categorySlider"></div>
 
-<section>
+<section id="menuContainer"></section>
 
-<h2 style="text-align:center;color:gold;">Find Us</h2>
+<div class="cart">
 
-<div class="map">
+<h3>🛒 Cart</h3>
 
-<iframe src="https://maps.google.com/maps?q=restaurant&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+<ul id="cartItems"></ul>
+
+<p>Total ₹ <span id="total">0</span></p>
+
+<input id="name" placeholder="Customer Name">
+
+<input id="phone" placeholder="Phone">
+
+<select id="type">
+
+<option>Home Delivery</option>
+
+<option>Dine In</option>
+
+<option>Take Away</option>
+
+</select>
+
+<input id="landmark" placeholder="Landmark">
+
+<button onclick="clearCart()">Clear</button>
+
+<button onclick="order()">Order</button>
 
 </div>
 
-</section>
+<div class="whatsapp" onclick="order()">📲</div>
+
+<div class="thankyou" id="thanks">
+
+<h2>🎉 Order Successful</h2>
+
+<p id="orderID"></p>
+
+<p>Estimated Delivery: 30 Minutes</p>
+
+<button onclick="closeThanks()">Close</button>
+
+</div>
 
 <script>
 
-let images=[
-"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38",
-"https://images.unsplash.com/photo-1550547660-d9450f859349",
-"https://images.unsplash.com/photo-1600891964599-f61ba0e24092"
-];
+let cart=[]
+let total=0
+let cartCount=0
 
-let i=0;
+fetch("menu.json")
 
-setInterval(()=>{
-i=(i+1)%images.length;
-document.getElementById("slide").src=images[i];
-},3000);
+.then(res=>res.json())
+
+.then(data=>{
+
+createCategories(data.menu)
+
+showMenu(data.menu)
+
+})
+
+function createCategories(menu){
+
+let slider=document.getElementById("categorySlider")
+
+menu.forEach(cat=>{
+
+let btn=document.createElement("button")
+
+btn.className="category-btn"
+
+btn.innerText=cat.category
+
+btn.onclick=()=>scrollToCategory(cat.category)
+
+slider.appendChild(btn)
+
+})
+
+}
+
+function scrollToCategory(name){
+
+document.getElementById(name).scrollIntoView({behavior:"smooth"})
+
+}
+
+function showMenu(menu){
+
+let container=document.getElementById("menuContainer")
+
+menu.forEach(cat=>{
+
+let title=document.createElement("h3")
+
+title.id=cat.category
+
+title.innerText=cat.category
+
+container.appendChild(title)
+
+cat.items.forEach(item=>{
+
+let qty=1
+
+let div=document.createElement("div")
+
+div.className="menu-item"
+
+div.innerHTML=`
+
+<span>${item.name} - ₹${item.price}</span>
+
+<div class="qty-box">
+
+<button class="qty-btn">-</button>
+
+<span class="qty">1</span>
+
+<button class="qty-btn">+</button>
+
+<button class="add-btn">Add</button>
+
+</div>
+
+`
+
+let qtySpan=div.querySelector(".qty")
+
+let btns=div.querySelectorAll(".qty-btn")
+
+btns[0].onclick=()=>{
+
+if(qty>1){qty--;qtySpan.innerText=qty}
+
+}
+
+btns[1].onclick=()=>{
+
+qty++;qtySpan.innerText=qty
+
+}
+
+div.querySelector(".add-btn").onclick=()=>{
+
+let price=parseInt(item.price)*qty
+
+total+=price
+
+cart.push(item.name+" x"+qty)
+
+cartCount++
+
+document.getElementById("cartCount").innerText=cartCount
+
+document.getElementById("total").innerText=total
+
+let li=document.createElement("li")
+
+li.innerText=item.name+" x"+qty
+
+document.getElementById("cartItems").appendChild(li)
+
+}
+
+container.appendChild(div)
+
+})
+
+})
+
+}
+
+document.getElementById("search").addEventListener("keyup",function(){
+
+let value=this.value.toLowerCase()
+
+let items=document.querySelectorAll(".menu-item")
+
+items.forEach(i=>{
+
+i.style.display=i.innerText.toLowerCase().includes(value)?"flex":"none"
+
+})
+
+})
+
+function clearCart(){
+
+cart=[]
+
+total=0
+
+cartCount=0
+
+document.getElementById("cartItems").innerHTML=""
+
+document.getElementById("total").innerText=0
+
+document.getElementById("cartCount").innerText=0
+
+}
+
+function order(){
+
+let name=document.getElementById("name").value
+
+let phone=document.getElementById("phone").value
+
+let type=document.getElementById("type").value
+
+let landmark=document.getElementById("landmark").value
+
+let id="ORD"+Math.floor(Math.random()*100000)
+
+let msg="Order ID: "+id+"%0A"
+
+msg+="Name: "+name+"%0A"
+
+msg+="Phone: "+phone+"%0A"
+
+msg+="Items:%0A"
+
+cart.forEach(i=>{msg+=i+"%0A"})
+
+msg+="Total ₹"+total+"%0A"
+
+msg+="Type: "+type+"%0A"
+
+msg+="Landmark: "+landmark
+
+window.open("https://wa.me/919938467223?text="+msg)
+
+document.getElementById("orderID").innerText="Order ID: "+id
+
+document.getElementById("thanks").style.display="block"
+
+}
+
+function closeThanks(){
+
+document.getElementById("thanks").style.display="none"
+
+}
 
 </script>
 
