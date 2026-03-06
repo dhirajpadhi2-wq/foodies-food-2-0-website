@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Foodies Food Menu</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Poppins;
+background:#0a0a0a;
+color:white;
+}
+
+header{
+background:black;
+padding:15px;
+text-align:center;
+border-bottom:2px solid gold;
+}
+
+h1{
+color:gold;
+}
+
+.menu-item{
+display:flex;
+justify-content:space-between;
+border-bottom:1px solid #333;
+padding:10px;
+}
+
+.qty-btn{
+background:gold;
+border:none;
+padding:5px 10px;
+cursor:pointer;
+}
+
+.add-btn{
+background:gold;
+border:none;
+padding:5px 10px;
+cursor:pointer;
+}
+
+.cart{
+position:fixed;
+right:10px;
+bottom:80px;
+background:#111;
+padding:20px;
+border-radius:10px;
+width:250px;
+border:1px solid gold;
+max-height:350px;
+overflow:auto;
+}
+
+.whatsapp{
+position:fixed;
+bottom:10px;
+right:10px;
+background:#25D366;
+padding:15px;
+border-radius:50px;
+cursor:pointer;
+}
+
+input,select{
+width:100%;
+margin-top:5px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>Foodies Food Menu</h1>
+
+</header>
+
+<div id="menuContainer"></div>
+
+<div class="cart">
+
+<h3>🛒 Cart</h3>
+
+<ul id="cartItems"></ul>
+
+<p>Total ₹ <span id="total">0</span></p>
+
+<select id="orderType">
+
+<option>Home Delivery</option>
+<option>Dine In</option>
+<option>Take Away</option>
+
+</select>
+
+<input id="landmark" placeholder="Enter Landmark">
+
+<button onclick="clearCart()">Clear Cart</button>
+<button onclick="orderWhatsApp()">Order</button>
+
+</div>
+
+<div class="whatsapp" onclick="orderWhatsApp()">
+Order
+</div>
+
+<script>
+
+let cart=[];
+let total=0;
+
+fetch("menu.json")
+
+.then(res=>res.json())
+
+.then(data=>{
+
+let container=document.getElementById("menuContainer");
+
+data.menu.forEach(category=>{
+
+let title=document.createElement("h2");
+title.innerText=category.category;
+
+container.appendChild(title);
+
+category.items.forEach(item=>{
+
+let qty=1;
+
+let div=document.createElement("div");
+div.className="menu-item";
+
+div.innerHTML=`
+<span>${item.name} - ₹${item.price}</span>
+
+<div>
+
+<button class="qty-btn">-</button>
+<span class="qty">1</span>
+<button class="qty-btn">+</button>
+<button class="add-btn">Add</button>
+
+</div>
+`;
+
+let qtySpan=div.querySelector(".qty");
+
+let buttons=div.querySelectorAll(".qty-btn");
+
+buttons[0].onclick=()=>{
+if(qty>1){
+qty--;
+qtySpan.innerText=qty;
+}
+}
+
+buttons[1].onclick=()=>{
+qty++;
+qtySpan.innerText=qty;
+}
+
+div.querySelector(".add-btn").onclick=()=>{
+
+let price=item.price*qty;
+
+total+=price;
+
+cart.push(item.name+" x"+qty);
+
+document.getElementById("total").innerText=total;
+
+let li=document.createElement("li");
+li.innerText=item.name+" x"+qty;
+
+document.getElementById("cartItems").appendChild(li);
+
+}
+
+container.appendChild(div);
+
+});
+
+});
+
+});
+
+function clearCart(){
+
+cart=[];
+total=0;
+
+document.getElementById("cartItems").innerHTML="";
+document.getElementById("total").innerText=0;
+
+}
+
+function orderWhatsApp(){
+
+let type=document.getElementById("orderType").value;
+let landmark=document.getElementById("landmark").value;
+
+let message="Hello I want to order:%0A";
+
+cart.forEach(i=>{
+message+=i+"%0A";
+});
+
+message+="Order Type:"+type+"%0A";
+message+="Landmark:"+landmark+"%0A";
+message+="Total ₹"+total;
+
+window.open("https://wa.me/919938467223?text="+message);
+
+}
+
+</script>
+
+</body>
+</html>
