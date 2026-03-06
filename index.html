@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Foodies Food 2.0</title>
 
 <style>
@@ -15,10 +14,8 @@ background:#0a0a0a;
 color:white;
 }
 
-/* HEADER */
-
 header{
-background:#000;
+background:black;
 padding:15px;
 text-align:center;
 border-bottom:2px solid gold;
@@ -26,14 +23,14 @@ border-bottom:2px solid gold;
 
 header h1{
 color:gold;
-letter-spacing:2px;
+letter-spacing:3px;
 }
 
 nav{
 display:flex;
 justify-content:center;
-gap:20px;
-padding:10px;
+gap:25px;
+margin-top:10px;
 }
 
 nav a{
@@ -46,51 +43,27 @@ nav a:hover{
 color:gold;
 }
 
-/* SLIDER */
-
 .slider img{
 width:100%;
-height:300px;
+height:350px;
 object-fit:cover;
 border-bottom:2px solid gold;
 }
-
-/* HERO */
-
-.hero{
-height:50vh;
-background:url("https://images.unsplash.com/photo-1600891964599-f61ba0e24092");
-background-size:cover;
-display:flex;
-align-items:center;
-justify-content:center;
-}
-
-.hero h2{
-background:rgba(0,0,0,0.6);
-padding:20px;
-border:2px solid gold;
-font-size:35px;
-}
-
-/* SECTIONS */
 
 section{
 padding:40px;
 }
 
 h2{
-color:gold;
 text-align:center;
+color:gold;
+margin-bottom:30px;
 }
-
-/* MENU */
 
 .menu-grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:20px;
-margin-top:30px;
 }
 
 .food-card{
@@ -104,7 +77,7 @@ transition:.4s;
 
 .food-card:hover{
 transform:scale(1.05);
-box-shadow:0 0 20px gold;
+box-shadow:0 0 15px gold;
 }
 
 .food-card img{
@@ -119,6 +92,11 @@ color:gold;
 font-weight:bold;
 }
 
+.qty{
+width:60px;
+margin-top:5px;
+}
+
 .add-btn{
 background:gold;
 border:none;
@@ -126,8 +104,6 @@ padding:8px 15px;
 cursor:pointer;
 margin-top:10px;
 }
-
-/* GALLERY */
 
 .gallery{
 display:grid;
@@ -140,59 +116,54 @@ width:100%;
 border-radius:10px;
 }
 
-.gallery img:hover{
-transform:scale(1.05);
-box-shadow:0 0 15px gold;
-}
-
-/* CONTACT */
-
-.contact{
-max-width:500px;
-margin:auto;
-}
-
-input,textarea{
-width:100%;
-padding:10px;
-margin:10px 0;
-border:none;
-border-radius:5px;
-}
-
-/* CART */
-
 .cart{
 position:fixed;
 right:10px;
-bottom:10px;
+bottom:80px;
 background:#111;
 padding:20px;
 border-radius:10px;
+width:230px;
 border:1px solid gold;
-width:200px;
+max-height:300px;
+overflow:auto;
 }
 
-/* FOOTER */
+.cart h3{
+color:gold;
+}
+
+.whatsapp{
+position:fixed;
+bottom:10px;
+right:10px;
+background:#25D366;
+color:white;
+padding:15px;
+border-radius:50px;
+font-size:18px;
+text-decoration:none;
+}
+
+.map iframe{
+width:100%;
+height:300px;
+border:0;
+}
 
 footer{
-background:black;
 text-align:center;
 padding:20px;
 border-top:2px solid gold;
+margin-top:40px;
 }
-
-/* LOADER */
-
 
 </style>
 </head>
 
 <body>
 
-
 <header>
-
 <h1>Foodies Food 2.0</h1>
 
 <nav>
@@ -200,65 +171,30 @@ border-top:2px solid gold;
 <a href="#gallery">Gallery</a>
 <a href="#contact">Contact</a>
 </nav>
-
 </header>
 
 <div class="slider">
 <img id="slide" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38">
 </div>
 
-<div class="hero">
-<h2>Delicious Food • Luxury Taste</h2>
-</div>
-
 <section id="menu">
 
-<h2>Our Special Menu</h2>
+<h2>Our Full Menu</h2>
 
-<div class="menu-grid">
-
-<div class="food-card">
-<img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38">
-<h3>Pizza</h3>
-<p class="price">₹199</p>
-<button class="add-btn" onclick="addToCart('Pizza',199)">Add to Cart</button>
-</div>
-
-<div class="food-card">
-<img src="https://images.unsplash.com/photo-1550547660-d9450f859349">
-<h3>Burger</h3>
-<p class="price">₹120</p>
-<button class="add-btn" onclick="addToCart('Burger',120)">Add to Cart</button>
-</div>
-
-<div class="food-card">
-<img src="https://images.unsplash.com/photo-1604908176997-43154a4d02e0">
-<h3>Biryani</h3>
-<p class="price">₹180</p>
-<button class="add-btn" onclick="addToCart('Biryani',180)">Add to Cart</button>
-</div>
-
-<div class="food-card">
-<img src="https://images.unsplash.com/photo-1585032226651-759b368d7246">
-<h3>Noodles</h3>
-<p class="price">₹140</p>
-<button class="add-btn" onclick="addToCart('Noodles',140)">Add to Cart</button>
-</div>
-
-</div>
+<div class="menu-grid" id="menuContainer"></div>
 
 </section>
 
 <section id="gallery">
 
-<h2>Food Gallery</h2>
+<h2>Restaurant Gallery</h2>
 
 <div class="gallery">
 
+<img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092">
+<img src="https://images.unsplash.com/photo-1550547660-d9450f859349">
 <img src="https://images.unsplash.com/photo-1604908176997-43154a4d02e0">
 <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38">
-<img src="https://images.unsplash.com/photo-1550547660-d9450f859349">
-<img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092">
 
 </div>
 
@@ -266,22 +202,11 @@ border-top:2px solid gold;
 
 <section id="contact">
 
-<h2>Contact Us</h2>
-
-<div class="contact">
-
-<input type="text" placeholder="Your Name">
-<input type="email" placeholder="Your Email">
-<textarea placeholder="Message"></textarea>
-
-<button>Send Message</button>
+<h2>Find Us</h2>
 
 <div class="map">
 
-<iframe src="https://maps.google.com/maps?q=foodies%20food%202.0&t=&z=13&ie=UTF8&iwloc=&output=embed"
-width="100%" height="250"></iframe>
-
-</div>
+<iframe src="https://maps.google.com/maps?q=restaurant&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
 
 </div>
 
@@ -291,13 +216,15 @@ width="100%" height="250"></iframe>
 
 <h3>🛒 Cart</h3>
 
-<ul id="cart-items"></ul>
+<ul id="cartItems"></ul>
 
 <p>Total: ₹<span id="total">0</span></p>
 
-<button onclick="orderWhatsApp()">Order via WhatsApp</button>
+<button onclick="orderWhatsApp()">Order</button>
 
 </div>
+
+<a class="whatsapp" onclick="orderWhatsApp()">Order WhatsApp</a>
 
 <footer>
 
@@ -307,23 +234,156 @@ width="100%" height="250"></iframe>
 
 <script>
 
+const menu=[
 
+{
+  "menu":[
+
+{
+"category":"Chinese Non Veg",
+"items":[
+{"name":"Chilly Chicken","price":"120"},
+{"name":"Boneless Chilly Chicken","price":"140"},
+{"name":"Chicken Manchurian","price":"120"},
+{"name":"Chicken Pakoda","price":"100"},
+{"name":"Chicken 65","price":"120"},
+{"name":"Chicken Lollipop","price":"130"},
+{"name":"Chicken Majestic","price":"140"},
+{"name":"Chicken 555","price":"160"},
+{"name":"Hot Garlic Chicken","price":"160"},
+{"name":"Schezwan Chicken","price":"160"},
+{"name":"Chicken Salt & Pepper","price":"120"},
+{"name":"Red Chilly Pepper Chicken","price":"130"},
+{"name":"Dragon Chicken","price":"160"},
+{"name":"Garlic Chicken","price":"120"},
+{"name":"Prawn Chilly","price":"200"},
+{"name":"Fish Chilly","price":"180"}
+]
+},
+
+{
+"category":"Chinese Veg",
+"items":[
+{"name":"Chilly Paneer","price":"120"},
+{"name":"Paneer Manchurian","price":"120"},
+{"name":"Paneer 65","price":"140"},
+{"name":"Schezwan Paneer","price":"140"},
+{"name":"Dragon Paneer","price":"160"},
+{"name":"Paneer 555","price":"160"},
+{"name":"Chilly Mushroom","price":"120"},
+{"name":"Mushroom Manchurian","price":"120"},
+{"name":"Mushroom 65","price":"120"},
+{"name":"Schezwan Mushroom","price":"140"},
+{"name":"Chilly Kobi","price":"100"}
+]
+},
+
+{
+"category":"Indian Non Veg",
+"items":[
+{"name":"Butter Chicken","price":"140"},
+{"name":"Chicken Mughlai","price":"150"},
+{"name":"Chicken Hyderabadi","price":"140"},
+{"name":"Chicken Punjabi","price":"150"},
+{"name":"Chicken Kolhapuri","price":"140"},
+{"name":"Kundan Chicken","price":"150"},
+{"name":"Chicken Masala","price":"120"},
+{"name":"Chicken Kasa","price":"120"},
+{"name":"Chicken Tikka Masala","price":"160"},
+{"name":"Chicken Lababdar","price":"160"}
+]
+},
+
+{
+"category":"Biryani & Rice",
+"items":[
+{"name":"Chicken Dum Biryani","price":"130"},
+{"name":"Mutton Biryani","price":"220"},
+{"name":"Veg Fried Rice","price":"70"},
+{"name":"Egg Fried Rice","price":"80"}
+]
+},
+
+{
+"category":"Breads",
+"items":[
+{"name":"Butter Naan","price":"25"},
+{"name":"Plain Naan","price":"20"},
+{"name":"Lachha Paratha","price":"20"},
+{"name":"Plain Paratha","price":"10"},
+{"name":"Tandoori Roti","price":"15"},
+{"name":"Chapati","price":"7"}
+]
+},
+
+{
+"category":"Rolls",
+"items":[
+{"name":"Veg Roll","price":"50"},
+{"name":"Egg Roll","price":"60"},
+{"name":"Chicken Egg Roll","price":"70"}
+]
+},
+
+{
+"category":"Drinks",
+"items":[
+{"name":"Masala Cola Drinks","price":"40"},
+{"name":"Mineral Water","price":"20"}
+]
+}
+
+]};
+  
 let cart=[];
 let total=0;
 
-function addToCart(name,price){
+const container=document.getElementById("menuContainer");
 
-cart.push(name);
+menu.forEach((item,index)=>{
+
+let card=document.createElement("div");
+card.className="food-card";
+
+card.innerHTML=`
+
+<img src="https://source.unsplash.com/300x200/?${item.name}">
+
+<h3>${item.name}</h3>
+
+<p class="price">₹${item.price}</p>
+
+<input type="number" value="1" min="1" class="qty" id="qty${index}">
+
+<br>
+
+<button class="add-btn" onclick="addToCart(${index})">Add to Cart</button>
+
+`;
+
+container.appendChild(card);
+
+});
+
+function addToCart(i){
+
+let qty=document.getElementById("qty"+i).value;
+
+let item=menu[i];
+
+let price=item.price*qty;
 
 total+=price;
+
+cart.push(item.name+" x"+qty);
 
 document.getElementById("total").innerText=total;
 
 let li=document.createElement("li");
 
-li.innerText=name+" - ₹"+price;
+li.innerText=item.name+" x"+qty;
 
-document.getElementById("cart-items").appendChild(li);
+document.getElementById("cartItems").appendChild(li);
 
 }
 
@@ -331,8 +391,8 @@ function orderWhatsApp(){
 
 let message="Hello I want to order:%0A";
 
-cart.forEach(item=>{
-message+=item+"%0A";
+cart.forEach(i=>{
+message+=i+"%0A";
 });
 
 message+="Total ₹"+total;
@@ -340,8 +400,6 @@ message+="Total ₹"+total;
 window.open("https://wa.me/919938467223?text="+message);
 
 }
-
-/* SLIDER */
 
 let images=[
 "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38",
@@ -352,8 +410,11 @@ let images=[
 let i=0;
 
 setInterval(()=>{
+
 i=(i+1)%images.length;
+
 document.getElementById("slide").src=images[i];
+
 },3000);
 
 </script>
