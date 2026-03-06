@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Foodies Food 2.0</title>
 
 <style>
 
 body{
 margin:0;
-font-family:Poppins, sans-serif;
+font-family:Poppins;
 background:#0a0a0a;
 color:white;
 }
@@ -60,49 +61,37 @@ color:gold;
 margin-bottom:30px;
 }
 
-.menu-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-}
-
-.food-card{
-background:#111;
-padding:15px;
-border-radius:15px;
-text-align:center;
-border:1px solid #222;
-transition:.4s;
-}
-
-.food-card:hover{
-transform:scale(1.05);
-box-shadow:0 0 15px gold;
-}
-
-.food-card img{
-width:100%;
-height:150px;
-object-fit:cover;
-border-radius:10px;
-}
-
-.price{
+.category-title{
 color:gold;
-font-weight:bold;
+margin-top:40px;
 }
 
-.qty{
-width:60px;
-margin-top:5px;
+.menu-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid #333;
+padding:10px;
+}
+
+.qty-box{
+display:flex;
+align-items:center;
+gap:5px;
+}
+
+.qty-btn{
+background:gold;
+border:none;
+padding:5px 10px;
+cursor:pointer;
 }
 
 .add-btn{
 background:gold;
 border:none;
-padding:8px 15px;
+padding:6px 12px;
 cursor:pointer;
-margin-top:10px;
 }
 
 .gallery{
@@ -123,14 +112,18 @@ bottom:80px;
 background:#111;
 padding:20px;
 border-radius:10px;
-width:230px;
+width:250px;
 border:1px solid gold;
-max-height:300px;
+max-height:350px;
 overflow:auto;
 }
 
 .cart h3{
 color:gold;
+}
+
+.cart button{
+margin-top:5px;
 }
 
 .whatsapp{
@@ -142,7 +135,6 @@ color:white;
 padding:15px;
 border-radius:50px;
 font-size:18px;
-text-decoration:none;
 cursor:pointer;
 }
 
@@ -159,32 +151,47 @@ border-top:2px solid gold;
 margin-top:40px;
 }
 
+.order-options{
+margin-top:10px;
+}
+
+input{
+width:100%;
+padding:5px;
+margin-top:5px;
+}
+
 </style>
 </head>
 
 <body>
 
 <header>
+
 <h1>Foodies Food 2.0</h1>
 
 <nav>
 <a href="#menu">Menu</a>
 <a href="#gallery">Gallery</a>
-<a href="#contact">Contact</a>
+<a href="#contact">Location</a>
 </nav>
+
 </header>
 
+
 <div class="slider">
-<img id="slide" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38">
+<img id="slide" src="https://source.unsplash.com/1600x500/?restaurant-food">
 </div>
+
 
 <section id="menu">
 
 <h2>Our Full Menu</h2>
 
-<div class="menu-grid" id="menuContainer"></div>
+<div id="menuContainer"></div>
 
 </section>
+
 
 <section id="gallery">
 
@@ -192,14 +199,15 @@ margin-top:40px;
 
 <div class="gallery">
 
-<img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092">
-<img src="https://images.unsplash.com/photo-1550547660-d9450f859349">
-<img src="https://images.unsplash.com/photo-1604908176997-43154a4d02e0">
-<img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38">
+<img src="https://source.unsplash.com/400x300/?restaurant">
+<img src="https://source.unsplash.com/400x300/?food-plate">
+<img src="https://source.unsplash.com/400x300/?biryani">
+<img src="https://source.unsplash.com/400x300/?indian-food">
 
 </div>
 
 </section>
+
 
 <section id="contact">
 
@@ -213,19 +221,38 @@ margin-top:40px;
 
 </section>
 
+
 <div class="cart">
 
 <h3>🛒 Cart</h3>
 
 <ul id="cartItems"></ul>
 
-<p>Total: ₹<span id="total">0</span></p>
+<p>Total ₹ <span id="total">0</span></p>
+
+<div class="order-options">
+
+<select id="orderType">
+<option>Home Delivery</option>
+<option>Dine In</option>
+<option>Take Away</option>
+</select>
+
+<input id="landmark" placeholder="Enter Landmark">
+
+</div>
+
+<button onclick="clearCart()">Clear Cart</button>
 
 <button onclick="orderWhatsApp()">Order</button>
 
 </div>
 
-<a class="whatsapp" onclick="orderWhatsApp()">Order WhatsApp</a>
+
+<div class="whatsapp" onclick="orderWhatsApp()">
+📲 Order
+</div>
+
 
 <footer>
 
@@ -233,84 +260,110 @@ margin-top:40px;
 
 </footer>
 
+
 <script>
 
 let cart=[];
 let total=0;
 
 fetch("menu.json")
-.then(res => res.json())
-.then(data => {
-console.log(data);
-});
 
-const container=document.getElementById("menuContainer");
+.then(res=>res.json())
+
+.then(data=>{
+
+let container=document.getElementById("menuContainer");
 
 data.menu.forEach(category=>{
 
-let title=document.createElement("h2");
-
+let title=document.createElement("h3");
+title.className="category-title";
 title.innerText=category.category;
-
-title.style.gridColumn="1/-1";
-
-title.style.color="gold";
 
 container.appendChild(title);
 
 category.items.forEach(item=>{
 
-let card=document.createElement("div");
+let qty=1;
 
-card.className="food-card";
+let div=document.createElement("div");
+div.className="menu-item";
 
-card.innerHTML=`
+div.innerHTML=`
 
-<img src="https://source.unsplash.com/300x200/?${item.name}">
+<span>${item.name} - ₹${item.price}</span>
 
-<h3>${item.name}</h3>
+<div class="qty-box">
 
-<p class="price">₹${item.price}</p>
+<button class="qty-btn">-</button>
 
-<input type="number" value="1" min="1" class="qty">
+<span class="qty">1</span>
 
-<br>
+<button class="qty-btn">+</button>
 
-<button class="add-btn" onclick="addToCart('${item.name}',${item.price},this)">
-Add to Cart
-</button>
+<button class="add-btn">Add</button>
+
+</div>
 
 `;
 
-container.appendChild(card);
+let qtySpan=div.querySelector(".qty");
 
-});
+let buttons=div.querySelectorAll(".qty-btn");
 
-});
+buttons[0].onclick=()=>{
+if(qty>1){
+qty--;
+qtySpan.innerText=qty;
+}
+}
 
-});
+buttons[1].onclick=()=>{
+qty++;
+qtySpan.innerText=qty;
+}
 
-function addToCart(name,price,btn){
+div.querySelector(".add-btn").onclick=()=>{
 
-let qty=btn.parentElement.querySelector(".qty").value;
+let price=parseInt(item.price)*qty;
 
-let cost=price*qty;
+total+=price;
 
-total+=cost;
-
-cart.push(name+" x"+qty);
+cart.push(item.name+" x"+qty);
 
 document.getElementById("total").innerText=total;
 
 let li=document.createElement("li");
-
-li.innerText=name+" x"+qty+" ₹"+cost;
+li.innerText=item.name+" x"+qty;
 
 document.getElementById("cartItems").appendChild(li);
 
 }
 
+container.appendChild(div);
+
+});
+
+});
+
+});
+
+
+function clearCart(){
+
+cart=[];
+total=0;
+
+document.getElementById("cartItems").innerHTML="";
+document.getElementById("total").innerText="0";
+
+}
+
+
 function orderWhatsApp(){
+
+let type=document.getElementById("orderType").value;
+let landmark=document.getElementById("landmark").value;
 
 let message="Hello I want to order:%0A";
 
@@ -318,16 +371,20 @@ cart.forEach(i=>{
 message+=i+"%0A";
 });
 
+message+="Order Type: "+type+"%0A";
+message+="Landmark: "+landmark+"%0A";
 message+="Total ₹"+total;
 
 window.open("https://wa.me/919938467223?text="+message);
 
 }
 
+
 let images=[
-"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38",
-"https://images.unsplash.com/photo-1550547660-d9450f859349",
-"https://images.unsplash.com/photo-1600891964599-f61ba0e24092"
+"https://source.unsplash.com/1600x500/?pizza",
+"https://source.unsplash.com/1600x500/?burger",
+"https://source.unsplash.com/1600x500/?biryani",
+"https://source.unsplash.com/1600x500/?indian-food"
 ];
 
 let i=0;
