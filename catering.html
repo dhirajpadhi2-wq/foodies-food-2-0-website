@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Catering Service | Foodies Food</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Poppins;
+background:#0a0a0a;
+color:white;
+}
+
+header{
+background:black;
+padding:15px;
+text-align:center;
+border-bottom:2px solid gold;
+}
+
+header h1{
+color:gold;
+}
+
+section{
+padding:40px;
+text-align:center;
+}
+
+h2{
+color:gold;
+}
+
+.services{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-top:30px;
+}
+
+.service-card{
+background:#111;
+padding:20px;
+border-radius:10px;
+border:1px solid #333;
+transition:.3s;
+}
+
+.service-card:hover{
+transform:scale(1.05);
+box-shadow:0 0 15px gold;
+}
+
+form{
+max-width:400px;
+margin:auto;
+margin-top:30px;
+}
+
+input,select,textarea{
+width:100%;
+padding:10px;
+margin-top:10px;
+border:none;
+border-radius:5px;
+}
+
+button{
+background:gold;
+border:none;
+padding:10px;
+margin-top:10px;
+cursor:pointer;
+width:100%;
+}
+
+footer{
+text-align:center;
+padding:20px;
+border-top:2px solid gold;
+margin-top:40px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>Foodies Food Catering</h1>
+
+</header>
+
+<section>
+
+<h2>Our Catering Services</h2>
+
+<p>We provide catering for weddings, parties, birthdays and corporate events.</p>
+
+<div class="services">
+
+<div class="service-card">
+<h3>Wedding Catering</h3>
+<p>Full buffet service for weddings.</p>
+</div>
+
+<div class="service-card">
+<h3>Birthday Party</h3>
+<p>Delicious food for birthday celebrations.</p>
+</div>
+
+<div class="service-card">
+<h3>Corporate Events</h3>
+<p>Office lunch & event catering.</p>
+</div>
+
+<div class="service-card">
+<h3>Festival Catering</h3>
+<p>Special festival menu catering.</p>
+</div>
+
+</div>
+
+<h2 style="margin-top:50px">Book Catering</h2>
+
+<form onsubmit="bookCatering(event)">
+
+<input id="name" placeholder="Your Name" required>
+
+<input id="phone" placeholder="Phone Number" required>
+
+<input id="people" placeholder="Number of People">
+
+<select id="event">
+
+<option>Wedding</option>
+
+<option>Birthday</option>
+
+<option>Corporate Event</option>
+
+<option>Festival</option>
+
+</select>
+
+<input id="date" type="date">
+
+<textarea id="address" placeholder="Event Address"></textarea>
+
+<button type="submit">Book Catering</button>
+
+</form>
+
+</section>
+
+<footer>
+
+<p>© 2026 Foodies Food</p>
+
+</footer>
+
+<script>
+
+function bookCatering(e){
+
+e.preventDefault()
+
+let name=document.getElementById("name").value
+let phone=document.getElementById("phone").value
+let people=document.getElementById("people").value
+let event=document.getElementById("event").value
+let date=document.getElementById("date").value
+let address=document.getElementById("address").value
+
+let msg="Catering Booking:%0A"
+
+msg+="Name: "+name+"%0A"
+msg+="Phone: "+phone+"%0A"
+msg+="Event: "+event+"%0A"
+msg+="People: "+people+"%0A"
+msg+="Date: "+date+"%0A"
+msg+="Address: "+address
+
+window.open("https://wa.me/919938467223?text="+msg)
+
+}
+
+</script>
+
+</body>
+
+</html>
