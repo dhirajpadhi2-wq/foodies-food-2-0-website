@@ -18,6 +18,8 @@ background:#0a0a0a;
 color:white;
 }
 
+/* HEADER */
+
 header{
 background:black;
 padding:15px;
@@ -50,27 +52,25 @@ nav a:hover{
 color:gold;
 }
 
+/* HERO */
+
 .hero{
 text-align:center;
-padding:40px 20px;
+padding:50px 20px;
+background:linear-gradient(45deg,#111,#000);
 }
 
 .hero h2{
 color:gold;
-font-size:32px;
+font-size:34px;
+margin-bottom:10px;
 }
 
 .hero p{
 color:#ccc;
 }
 
-.cart-count{
-background:gold;
-color:black;
-padding:2px 8px;
-border-radius:10px;
-margin-left:5px;
-}
+/* SEARCH */
 
 .search-box{
 text-align:center;
@@ -84,6 +84,8 @@ max-width:400px;
 border:none;
 border-radius:5px;
 }
+
+/* CATEGORY SLIDER */
 
 .category-slider{
 display:flex;
@@ -102,6 +104,24 @@ cursor:pointer;
 white-space:nowrap;
 }
 
+.category-btn:hover{
+background:gold;
+color:black;
+}
+
+/* MENU */
+
+#menuContainer{
+padding:10px;
+}
+
+#menuContainer h3{
+color:gold;
+border-bottom:1px solid #333;
+padding-bottom:5px;
+margin-top:25px;
+}
+
 .menu-item{
 display:flex;
 justify-content:space-between;
@@ -109,9 +129,12 @@ border-bottom:1px solid #333;
 padding:10px;
 }
 
+/* QUANTITY */
+
 .qty-box{
 display:flex;
 gap:5px;
+align-items:center;
 }
 
 .qty-btn{
@@ -128,6 +151,8 @@ padding:5px 10px;
 cursor:pointer;
 }
 
+/* CART */
+
 .cart{
 position:fixed;
 right:10px;
@@ -135,11 +160,26 @@ bottom:70px;
 background:#111;
 padding:20px;
 border-radius:10px;
-width:250px;
+width:260px;
 border:1px solid gold;
 max-height:350px;
 overflow:auto;
 }
+
+.cart h3{
+margin-top:0;
+color:gold;
+}
+
+.cart-count{
+background:gold;
+color:black;
+padding:2px 8px;
+border-radius:10px;
+margin-left:5px;
+}
+
+/* WHATSAPP */
 
 .whatsapp{
 position:fixed;
@@ -149,13 +189,20 @@ background:#25D366;
 padding:15px;
 border-radius:50px;
 cursor:pointer;
+font-size:20px;
 }
+
+/* FORM */
 
 input,select{
 width:100%;
 padding:6px;
 margin-top:5px;
+border:none;
+border-radius:4px;
 }
+
+/* THANK YOU */
 
 .thankyou{
 position:fixed;
@@ -295,12 +342,6 @@ fetch("menu.json")
 createCategories(data.menu)
 
 showMenu(data.menu)
-
-})
-
-.catch(()=>{
-
-document.getElementById("menuContainer").innerHTML="<p style='text-align:center'>Menu loading error</p>"
 
 })
 
@@ -460,14 +501,6 @@ document.getElementById("cartCount").innerText=0
 
 function order(){
 
-let name=document.getElementById("name").value
-
-let phone=document.getElementById("phone").value
-
-let type=document.getElementById("type").value
-
-let landmark=document.getElementById("landmark").value
-
 if(cart.length==0){
 
 alert("Cart is empty")
@@ -476,7 +509,16 @@ return
 
 }
 
+let name=document.getElementById("name").value
+
+let phone=document.getElementById("phone").value
+
+let type=document.getElementById("type").value
+
+let landmark=document.getElementById("landmark").value
+
 let id="ORD"+Math.floor(Math.random()*100000)
+
 
 let msg="Order ID: "+id+"%0A"
 
@@ -493,6 +535,7 @@ msg+="Total ₹"+total+"%0A"
 msg+="Type: "+type+"%0A"
 
 msg+="Landmark: "+landmark
+
 
 window.open("https://wa.me/919938467223?text="+msg)
 
@@ -512,4 +555,5 @@ document.getElementById("thanks").style.display="none"
 </script>
 
 </body>
+
 </html>
