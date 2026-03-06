@@ -9,7 +9,7 @@
 
 body{
 margin:0;
-font-family:Poppins;
+font-family:Poppins, sans-serif;
 background:#0a0a0a;
 color:white;
 }
@@ -143,6 +143,7 @@ padding:15px;
 border-radius:50px;
 font-size:18px;
 text-decoration:none;
+cursor:pointer;
 }
 
 .map iframe{
@@ -234,115 +235,33 @@ margin-top:40px;
 
 <script>
 
-const menu=[
-
-{
-  "menu":[
-
-{
-"category":"Chinese Non Veg",
-"items":[
-{"name":"Chilly Chicken","price":"120"},
-{"name":"Boneless Chilly Chicken","price":"140"},
-{"name":"Chicken Manchurian","price":"120"},
-{"name":"Chicken Pakoda","price":"100"},
-{"name":"Chicken 65","price":"120"},
-{"name":"Chicken Lollipop","price":"130"},
-{"name":"Chicken Majestic","price":"140"},
-{"name":"Chicken 555","price":"160"},
-{"name":"Hot Garlic Chicken","price":"160"},
-{"name":"Schezwan Chicken","price":"160"},
-{"name":"Chicken Salt & Pepper","price":"120"},
-{"name":"Red Chilly Pepper Chicken","price":"130"},
-{"name":"Dragon Chicken","price":"160"},
-{"name":"Garlic Chicken","price":"120"},
-{"name":"Prawn Chilly","price":"200"},
-{"name":"Fish Chilly","price":"180"}
-]
-},
-
-{
-"category":"Chinese Veg",
-"items":[
-{"name":"Chilly Paneer","price":"120"},
-{"name":"Paneer Manchurian","price":"120"},
-{"name":"Paneer 65","price":"140"},
-{"name":"Schezwan Paneer","price":"140"},
-{"name":"Dragon Paneer","price":"160"},
-{"name":"Paneer 555","price":"160"},
-{"name":"Chilly Mushroom","price":"120"},
-{"name":"Mushroom Manchurian","price":"120"},
-{"name":"Mushroom 65","price":"120"},
-{"name":"Schezwan Mushroom","price":"140"},
-{"name":"Chilly Kobi","price":"100"}
-]
-},
-
-{
-"category":"Indian Non Veg",
-"items":[
-{"name":"Butter Chicken","price":"140"},
-{"name":"Chicken Mughlai","price":"150"},
-{"name":"Chicken Hyderabadi","price":"140"},
-{"name":"Chicken Punjabi","price":"150"},
-{"name":"Chicken Kolhapuri","price":"140"},
-{"name":"Kundan Chicken","price":"150"},
-{"name":"Chicken Masala","price":"120"},
-{"name":"Chicken Kasa","price":"120"},
-{"name":"Chicken Tikka Masala","price":"160"},
-{"name":"Chicken Lababdar","price":"160"}
-]
-},
-
-{
-"category":"Biryani & Rice",
-"items":[
-{"name":"Chicken Dum Biryani","price":"130"},
-{"name":"Mutton Biryani","price":"220"},
-{"name":"Veg Fried Rice","price":"70"},
-{"name":"Egg Fried Rice","price":"80"}
-]
-},
-
-{
-"category":"Breads",
-"items":[
-{"name":"Butter Naan","price":"25"},
-{"name":"Plain Naan","price":"20"},
-{"name":"Lachha Paratha","price":"20"},
-{"name":"Plain Paratha","price":"10"},
-{"name":"Tandoori Roti","price":"15"},
-{"name":"Chapati","price":"7"}
-]
-},
-
-{
-"category":"Rolls",
-"items":[
-{"name":"Veg Roll","price":"50"},
-{"name":"Egg Roll","price":"60"},
-{"name":"Chicken Egg Roll","price":"70"}
-]
-},
-
-{
-"category":"Drinks",
-"items":[
-{"name":"Masala Cola Drinks","price":"40"},
-{"name":"Mineral Water","price":"20"}
-]
-}
-
-]};
-  
 let cart=[];
 let total=0;
 
+fetch("menu.json")
+
+.then(res=>res.json())
+
+.then(data=>{
+
 const container=document.getElementById("menuContainer");
 
-menu.forEach((item,index)=>{
+data.menu.forEach(category=>{
+
+let title=document.createElement("h2");
+
+title.innerText=category.category;
+
+title.style.gridColumn="1/-1";
+
+title.style.color="gold";
+
+container.appendChild(title);
+
+category.items.forEach(item=>{
 
 let card=document.createElement("div");
+
 card.className="food-card";
 
 card.innerHTML=`
@@ -353,11 +272,13 @@ card.innerHTML=`
 
 <p class="price">₹${item.price}</p>
 
-<input type="number" value="1" min="1" class="qty" id="qty${index}">
+<input type="number" value="1" min="1" class="qty">
 
 <br>
 
-<button class="add-btn" onclick="addToCart(${index})">Add to Cart</button>
+<button class="add-btn" onclick="addToCart('${item.name}',${item.price},this)">
+Add to Cart
+</button>
 
 `;
 
@@ -365,23 +286,25 @@ container.appendChild(card);
 
 });
 
-function addToCart(i){
+});
 
-let qty=document.getElementById("qty"+i).value;
+});
 
-let item=menu[i];
+function addToCart(name,price,btn){
 
-let price=item.price*qty;
+let qty=btn.parentElement.querySelector(".qty").value;
 
-total+=price;
+let cost=price*qty;
 
-cart.push(item.name+" x"+qty);
+total+=cost;
+
+cart.push(name+" x"+qty);
 
 document.getElementById("total").innerText=total;
 
 let li=document.createElement("li");
 
-li.innerText=item.name+" x"+qty;
+li.innerText=name+" x"+qty+" ₹"+cost;
 
 document.getElementById("cartItems").appendChild(li);
 
