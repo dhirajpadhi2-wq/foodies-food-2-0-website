@@ -239,10 +239,10 @@ let cart=[];
 let total=0;
 
 fetch("menu.json")
-
-.then(res=>res.json())
-
-.then(data=>{
+.then(res => res.json())
+.then(data => {
+console.log(data);
+});
 
 const container=document.getElementById("menuContainer");
 
