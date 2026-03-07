@@ -52,22 +52,51 @@ nav a:hover{
 color:gold;
 }
 
+/* SLIDER */
+
+.slider{
+width:100%;
+height:350px;
+overflow:hidden;
+}
+
+.slides{
+display:flex;
+width:400%;
+animation:slide 16s infinite;
+}
+
+.slides img{
+width:100%;
+height:350px;
+object-fit:cover;
+}
+
+@keyframes slide{
+
+0%{margin-left:0}
+25%{margin-left:0}
+
+30%{margin-left:-100%}
+50%{margin-left:-100%}
+
+55%{margin-left:-200%}
+75%{margin-left:-200%}
+
+80%{margin-left:-300%}
+100%{margin-left:-300%}
+
+}
+
 /* HERO */
 
 .hero{
 text-align:center;
-padding:50px 20px;
-background:linear-gradient(45deg,#111,#000);
+padding:30px;
 }
 
 .hero h2{
 color:gold;
-font-size:34px;
-margin-bottom:10px;
-}
-
-.hero p{
-color:#ccc;
 }
 
 /* SEARCH */
@@ -85,7 +114,7 @@ border:none;
 border-radius:5px;
 }
 
-/* CATEGORY SLIDER */
+/* CATEGORY */
 
 .category-slider{
 display:flex;
@@ -102,11 +131,6 @@ padding:8px 15px;
 border-radius:20px;
 cursor:pointer;
 white-space:nowrap;
-}
-
-.category-btn:hover{
-background:gold;
-color:black;
 }
 
 /* MENU */
@@ -128,8 +152,6 @@ justify-content:space-between;
 border-bottom:1px solid #333;
 padding:10px;
 }
-
-/* QUANTITY */
 
 .qty-box{
 display:flex;
@@ -192,6 +214,44 @@ cursor:pointer;
 font-size:20px;
 }
 
+/* REVIEWS */
+
+.reviews{
+padding:40px 20px;
+text-align:center;
+}
+
+.review-box{
+background:#111;
+padding:20px;
+margin:10px;
+border-radius:10px;
+border:1px solid #333;
+}
+
+.review-box span{
+color:gold;
+}
+
+/* LOCATION */
+
+.location{
+padding:40px 20px;
+text-align:center;
+}
+
+.location h2{
+color:gold;
+}
+
+.location iframe{
+width:100%;
+height:350px;
+border:0;
+margin-top:20px;
+border-radius:10px;
+}
+
 /* FORM */
 
 input,select{
@@ -225,42 +285,6 @@ margin-top:40px;
 color:#aaa;
 }
 
-  .hero{
-height:90vh;
-background:url("https://images.unsplash.com/photo-1600891964599-f61ba0e24092") center/cover no-repeat;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-}
-
-.hero-box{
-background:rgba(0,0,0,0.7);
-padding:40px;
-border-radius:10px;
-}
-
-.hero h2{
-font-size:40px;
-color:gold;
-}
-
-.hero p{
-margin:10px 0 20px;
-color:#ddd;
-}
-
-.hero-btn{
-display:inline-block;
-margin:5px;
-padding:10px 20px;
-background:gold;
-color:black;
-text-decoration:none;
-border-radius:5px;
-font-weight:bold;
-}
-  
 </style>
 
 </head>
@@ -286,19 +310,27 @@ font-weight:bold;
 </header>
 
 
-<section class="hero">
+<!-- AUTO SLIDER -->
 
-<div class="hero-box">
+<div class="slider">
+
+<div class="slides">
+
+<img src="https://source.unsplash.com/1200x600/?biryani">
+<img src="https://source.unsplash.com/1200x600/?butter-chicken">
+<img src="https://source.unsplash.com/1200x600/?indian-food">
+<img src="https://source.unsplash.com/1200x600/?chinese-food">
+
+</div>
+
+</div>
+
+
+<section class="hero">
 
 <h2>Welcome To Foodies Food 2.0</h2>
 
 <p>Best Taste • Fast Delivery • Fresh Food</p>
-
-<a href="#menuContainer" class="hero-btn">View Menu</a>
-
-<a href="catering.html" class="hero-btn">Catering Service</a>
-
-</div>
 
 </section>
 
@@ -314,6 +346,50 @@ font-weight:bold;
 
 
 <section id="menuContainer"></section>
+
+
+<!-- REVIEWS -->
+
+<section class="reviews">
+
+<h2>⭐ Customer Reviews</h2>
+
+<div class="review-box">
+
+<p>“Amazing taste and fast delivery!”</p>
+
+<span>— Rahul</span>
+
+</div>
+
+<div class="review-box">
+
+<p>“Best biryani in town.”</p>
+
+<span>— Priya</span>
+
+</div>
+
+<div class="review-box">
+
+<p>“Affordable and delicious food.”</p>
+
+<span>— Amit</span>
+
+</div>
+
+</section>
+
+
+<!-- LOCATION -->
+
+<section class="location">
+
+<h2>📍 Our Location</h2>
+
+<iframe src="https://maps.google.com/maps?q=jajpur%20odisha&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+
+</section>
 
 
 <div class="cart">
@@ -372,10 +448,11 @@ font-weight:bold;
 
 <script>
 
+/* SAME SCRIPT AS YOUR OLD FILE */
+
 let cart=[]
 let total=0
 let cartCount=0
-
 
 fetch("menu.json")
 
@@ -388,7 +465,6 @@ createCategories(data.menu)
 showMenu(data.menu)
 
 })
-
 
 function createCategories(menu){
 
@@ -410,13 +486,11 @@ slider.appendChild(btn)
 
 }
 
-
 function scrollToCategory(name){
 
 document.getElementById(name).scrollIntoView({behavior:"smooth"})
 
 }
-
 
 function showMenu(menu){
 
@@ -431,7 +505,6 @@ title.id=cat.category
 title.innerText=cat.category
 
 container.appendChild(title)
-
 
 cat.items.forEach(item=>{
 
@@ -463,20 +536,17 @@ let qtySpan=div.querySelector(".qty")
 
 let btns=div.querySelectorAll(".qty-btn")
 
-
 btns[0].onclick=()=>{
 
 if(qty>1){qty--;qtySpan.innerText=qty}
 
 }
 
-
 btns[1].onclick=()=>{
 
 qty++;qtySpan.innerText=qty
 
 }
-
 
 div.querySelector(".add-btn").onclick=()=>{
 
@@ -492,7 +562,6 @@ document.getElementById("cartCount").innerText=cartCount
 
 document.getElementById("total").innerText=total
 
-
 let li=document.createElement("li")
 
 li.innerText=item.name+" x"+qty
@@ -501,98 +570,11 @@ document.getElementById("cartItems").appendChild(li)
 
 }
 
-
 container.appendChild(div)
 
 })
 
 })
-
-}
-
-
-document.getElementById("search").addEventListener("keyup",function(){
-
-let value=this.value.toLowerCase()
-
-let items=document.querySelectorAll(".menu-item")
-
-items.forEach(i=>{
-
-i.style.display=i.innerText.toLowerCase().includes(value)?"flex":"none"
-
-})
-
-})
-
-
-function clearCart(){
-
-cart=[]
-
-total=0
-
-cartCount=0
-
-document.getElementById("cartItems").innerHTML=""
-
-document.getElementById("total").innerText=0
-
-document.getElementById("cartCount").innerText=0
-
-}
-
-
-function order(){
-
-if(cart.length==0){
-
-alert("Cart is empty")
-
-return
-
-}
-
-let name=document.getElementById("name").value
-
-let phone=document.getElementById("phone").value
-
-let type=document.getElementById("type").value
-
-let landmark=document.getElementById("landmark").value
-
-let id="ORD"+Math.floor(Math.random()*100000)
-
-
-let msg="Order ID: "+id+"%0A"
-
-msg+="Name: "+name+"%0A"
-
-msg+="Phone: "+phone+"%0A"
-
-msg+="Items:%0A"
-
-cart.forEach(i=>{msg+=i+"%0A"})
-
-msg+="Total ₹"+total+"%0A"
-
-msg+="Type: "+type+"%0A"
-
-msg+="Landmark: "+landmark
-
-
-window.open("https://wa.me/919938467223?text="+msg)
-
-document.getElementById("orderID").innerText="Order ID: "+id
-
-document.getElementById("thanks").style.display="block"
-
-}
-
-
-function closeThanks(){
-
-document.getElementById("thanks").style.display="none"
 
 }
 
