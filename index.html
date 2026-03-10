@@ -638,6 +638,49 @@ container.appendChild(div)
 
 }
 
+  function order(){
+
+let name=document.getElementById("name").value
+let phone=document.getElementById("phone").value
+let type=document.getElementById("type").value
+let landmark=document.getElementById("landmark").value
+
+if(cart.length==0){
+alert("Please add items to cart")
+return
+}
+
+let message="Hello Foodies Food%0A%0A"
+
+message+="Name: "+name+"%0A"
+message+="Phone: "+phone+"%0A"
+message+="Order Type: "+type+"%0A"
+message+="Landmark: "+landmark+"%0A%0A"
+
+message+="Order:%0A"
+
+cart.forEach(item=>{
+message+=item+"%0A"
+})
+
+message+="%0ATotal ₹"+total
+
+let url="https://wa.me/919938467223?text="+message
+
+window.open(url,"_blank")
+
+document.getElementById("thanks").style.display="block"
+
+let orderID="Order ID: FF"+Math.floor(Math.random()*10000)
+
+document.getElementById("orderID").innerText=orderID
+
+}
+
+function closeThanks(){
+document.getElementById("thanks").style.display="none"
+}
+  
 </script>
 
 </body>
