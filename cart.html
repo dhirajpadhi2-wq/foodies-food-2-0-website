@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Your Cart | Foodies Food</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body{
+margin:0;
+font-family:Poppins;
+background:#0a0a0a;
+color:white;
+}
+
+header{
+background:black;
+padding:15px;
+text-align:center;
+border-bottom:2px solid gold;
+}
+
+h1{
+color:gold;
+}
+
+.cart-container{
+padding:20px;
+}
+
+.cart-item{
+display:flex;
+justify-content:space-between;
+border-bottom:1px solid #333;
+padding:10px;
+}
+
+.total{
+font-size:20px;
+margin-top:20px;
+color:gold;
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin-top:10px;
+border:none;
+border-radius:5px;
+}
+
+button{
+background:gold;
+border:none;
+padding:12px;
+margin-top:10px;
+cursor:pointer;
+width:100%;
+}
+
+.whatsapp{
+background:#25D366;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>🛒 Your Cart</h1>
+
+</header>
+
+<div class="cart-container">
+
+<ul id="cartItems"></ul>
+
+<p class="total">Total ₹ <span id="total">0</span></p>
+
+<h3>Customer Details</h3>
+
+<input id="name" placeholder="Customer Name">
+
+<input id="phone" placeholder="Phone Number">
+
+<select id="type">
+
+<option>Home Delivery</option>
+<option>Dine In</option>
+<option>Take Away</option>
+
+</select>
+
+<input id="landmark" placeholder="Landmark">
+
+<button onclick="order()">Order Now</button>
+
+<button class="whatsapp" onclick="order()">Order on WhatsApp</button>
+
+</div>
+
+<script>
+
+let cart=JSON.parse(localStorage.getItem("cart"))||[]
+let total=JSON.parse(localStorage.getItem("total"))||0
+
+let list=document.getElementById("cartItems")
+
+cart.forEach(item=>{
+let li=document.createElement("li")
+li.className="cart-item"
+li.innerText=item
+list.appendChild(li)
+})
+
+document.getElementById("total").innerText=total
+
+function order(){
+
+let name=document.getElementById("name").value
+let phone=document.getElementById("phone").value
+let type=document.getElementById("type").value
+let landmark=document.getElementById("landmark").value
+
+let message="Hello Foodies Food%0A%0A"
+
+message+="Name:"+name+"%0A"
+message+="Phone:"+phone+"%0A"
+message+="Type:"+type+"%0A"
+message+="Landmark:"+landmark+"%0A%0A"
+
+message+="Order:%0A"
+
+cart.forEach(i=>{
+message+=i+"%0A"
+})
+
+message+="%0ATotal ₹"+total
+
+window.open("https://wa.me/919938467223?text="+message)
+
+}
+
+</script>
+
+</body>
+
+</html>
