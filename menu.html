@@ -301,26 +301,31 @@ let phone=document.getElementById("custPhone").value;
 let type=document.getElementById("orderType").value;
 let landmark=document.getElementById("landmark").value;
 
-let message="Hello Foodies Food%0A";
+let message="Hello Foodies Food\n";
 
-message+="Name: "+name+"%0A";
-message+="Phone: "+phone+"%0A%0A";
+message+="Name: "+name+"\n";
+message+="Phone: "+phone+"\n\n";
 
-message+="Order:%0A";
+message+="Order:\n";
 
 cart.forEach(i=>{
-message+=i+"%0A";
+message+=i+"\n";
 });
 
-message+="%0AOrder Type:"+type;
-message+="%0ALandmark:"+landmark;
-message+="%0ATotal ₹"+total;
+message+="\nOrder Type: "+type;
+message+="\nLandmark: "+landmark;
+message+="\nTotal ₹"+total;
 
-window.open("https://wa.me/919938467223?text="+message);
+let encodedMsg = encodeURIComponent(message);
+
+let url="https://wa.me/919938467223?text="+encodedMsg;
+
+window.location.href=url;
+
+alert("✅ Thank you! Your order is opening in WhatsApp.");
 
 }
 
 </script>
-
 </body>
 </html>
