@@ -585,6 +585,11 @@ total+=price
 
 cart.push(item.name+" x"+qty)
 
+/* SAVE CART DATA */
+
+localStorage.setItem("cart",JSON.stringify(cart))
+localStorage.setItem("total",total)
+
 cartCount++
 
 document.getElementById("cartCount").innerText=cartCount
